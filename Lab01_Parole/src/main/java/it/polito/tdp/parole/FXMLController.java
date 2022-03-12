@@ -1,6 +1,6 @@
 package it.polito.tdp.parole;
 
-import it.polito.tdp.parole.model.Parole;
+import it.polito.tdp.parole.model.*;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -14,8 +14,14 @@ public class FXMLController {
 	
 	Parole elenco ;
 
+	@FXML
+	private TextArea txtPrestazioni;
+	 
     @FXML
     private ResourceBundle resources;
+    
+    @FXML
+    private Button btnCancella;
 
     @FXML
     private URL location;
@@ -34,12 +40,31 @@ public class FXMLController {
 
     @FXML
     void doInsert(ActionEvent event) {
-    	// TODO
+    	Long start = System.nanoTime();
+    	elenco.addParola(txtParola.getText());
+    	txtResult.setText(elenco.getElenco().toString());
+    	txtParola.clear();
+    	Long end = System.nanoTime() - start;
+    	txtPrestazioni.setText("tempo per inserire la parola: " + end.toString() + "nanosecondi");
     }
 
     @FXML
     void doReset(ActionEvent event) {
-    	// TODO
+    	Long start = System.nanoTime();
+    	elenco.reset();
+    	txtResult.clear();
+    	txtParola.clear();
+    	Long end = System.nanoTime() - start;
+    	txtPrestazioni.setText("tempo per resettare: " + end.toString() + "nanosecondi");
+    }
+    
+    @FXML
+    void doCancella(ActionEvent event) {
+    	Long start = System.nanoTime();
+    	elenco.cancella(txtResult.getSelectedText());
+    	txtResult.setText(elenco.getElenco().toString());
+    	Long end = System.nanoTime() - start;
+    	txtPrestazioni.setText("tempo per cancellare la parola: " + end.toString() + "nanosecondi");
     }
 
     @FXML
